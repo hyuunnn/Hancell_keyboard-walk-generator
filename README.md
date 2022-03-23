@@ -1,6 +1,6 @@
 ## Hancell_keyboard-walk-generator
 
-<img src="image.png" />
+<img src="img.png" />
 
 키보드 패턴을 인식하여 여러가지 패턴으로 만들어주는 프로그램
 

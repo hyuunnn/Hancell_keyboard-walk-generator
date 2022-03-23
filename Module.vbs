@@ -65,6 +65,30 @@ Function reverseStr(ByRef str)
     reverseStr = first_pattern + mid_pattern + last_pattern
 End Function
 
+Function twoBytesReverseStr(ByRef str)
+    Dim first_pattern, mid1_pattern, mid2_pattern, mid3_pattern, last_pattern
+    first_pattern = Left(str, 2)
+    mid1_pattern = reverse(Mid(str, 3, 2)) ' 처음 2글자를 역방향 패턴으로 저장
+    mid2_pattern = reverse(Mid(str, 5, 2)) ' 그 다음 2글자를 역방향 패턴으로 저장
+    mid3_pattern = reverse(Mid(str, 7, 2))
+    last_pattern = Right(str, 2) ' 나머지 패턴을 저장
+    twoBytesReverseStr = first_pattern + mid1_pattern + mid2_pattern + mid3_pattern + last_pattern
+End Function
+
+Function setReversePattern(ByRef str)
+    Dim check_pattern1, check_pattern2
+    check_pattern1 = ActiveSheet.CheckBoxes().Item(1).Value
+    check_pattern2 = ActiveSheet.CheckBoxes().Item(2).Value
+    
+    If (check_pattern1 = 1 And check_pattern2 = 1) Then
+        setReversePattern = ""
+    ElseIf (check_pattern1 = 1) Then
+        setReversePattern = reverseStr(str)
+    ElseIf (check_pattern2 = 1) Then
+        setReversePattern = twoBytesReverseStr(str)
+    End if
+End Function
+
 Sub 확인()
     Dim keyArray(7)
     keyArray(0) = Array("1","2","3","4","5","6","7","8","9","0","-","=","\")
@@ -111,14 +135,14 @@ Sub 확인()
         Range("B9:B9").Value = getPosArrayOutput(posArray, keyArray, 6)
         Range("B10:B10").Value = getPosArrayOutput(posArray, keyArray, 7)
         
-        Range("C3:C3").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 0))
-        Range("C4:C4").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 1))
-        Range("C5:C5").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 2))
-        Range("C6:C6").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 3))
-        Range("C7:C7").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 4))
-        Range("C8:C8").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 5))
-        Range("C9:C9").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 6))
-        Range("C10:C10").Value = reverseStr(getPosArrayOutput(posArray, keyArray, 7))
+        Range("C3:C3").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 0))
+        Range("C4:C4").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 1))
+        Range("C5:C5").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 2))
+        Range("C6:C6").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 3))
+        Range("C7:C7").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 4))
+        Range("C8:C8").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 5))
+        Range("C9:C9").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 6))
+        Range("C10:C10").Value = setReversePattern(getPosArrayOutput(posArray, keyArray, 7))
     Else
         MsgBox("입력한 패턴의 글자 수가 맞지 않습니다.")
     End If
